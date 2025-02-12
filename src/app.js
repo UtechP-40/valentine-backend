@@ -13,8 +13,12 @@ dotenv.config({ path: "./.env" });
 const app = express();
 
 app.use(cors({
-    origin: ["https://valentine-rust-five.vercel.app","http://localhost:80"], // Specify allowed headers
-  }));
+    origin: ["https://valentine-rust-five.vercel.app", "http://localhost"], // Allow frontend
+    methods: ["GET", "POST"], // Allowed methods
+    allowedHeaders: ["Content-Type"], // Allowed headers
+    credentials: true, // Allow cookies if needed
+}));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,7 +79,7 @@ app.get("/get-love/:id", async (req, res) => {
 connectDb()
     .then(() => {
         const PORT = process.env.PORT || 80;
-        app.listen(PORT, () => console.log(`Server running at: http://localhost:${PORT}`));
+        app.listen(3000, () => console.log(`Server running at: http://localhost:${PORT}`));
     })
     .catch((err) => {
         console.error("MongoDB Connection Failed", err);
