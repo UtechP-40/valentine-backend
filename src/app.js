@@ -13,9 +13,8 @@ dotenv.config({ path: "./.env" });
 const app = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || "*",
-    credentials: true
-}));
+    origin: ["https://valentine-rust-five.vercel.app","http://localhost:80"], // Specify allowed headers
+  }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
