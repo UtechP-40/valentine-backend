@@ -14,7 +14,7 @@ dotenv.config({ path: "./.env" });
 const app = express();
 
 app.use(cors({
-    origin: ["https://valentine-rust-five.vercel.app", "http://localhost:5173"], // Allow frontend
+    origin: "*",//["https://valentine-rust-five.vercel.app", "http://localhost:5173"], // Allow frontend
     methods: ["GET", "POST"], // Allowed methods
     allowedHeaders: ["Content-Type"], // Allowed headers
 }));
@@ -85,6 +85,10 @@ app.get("/get-love/:id", async (req, res) => {
 
 
 app.post("/save-love-letter/:id",saveLoveLetter )
+
+    app.get("/", (req, res) => {
+        res.send("<h1>Welcome to the homepage</h1>");
+    });
 
 
 connectDb()
