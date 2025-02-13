@@ -13,11 +13,14 @@ dotenv.config({ path: "./.env" });
 
 const app = express();
 
-app.use(cors({
-    origin: "*",//["https://valentine-rust-five.vercel.app", "http://localhost:5173"], // Allow frontend
-    methods: ["GET", "POST"], // Allowed methods
-    allowedHeaders: ["Content-Type"], // Allowed headers
-}));
+app.use(
+    cors({
+      origin: "https://valentine-rust-five.vercel.app", // Replace with your frontend URL
+      methods: "GET,POST,PUT,DELETE",
+      allowedHeaders: "Content-Type,Authorization",
+      credentials: true, // If using cookies or sessions
+    })
+  );
 
 
 app.use(express.json());
@@ -93,7 +96,7 @@ app.post("/save-love-letter/:id",saveLoveLetter )
 
 connectDb()
     .then(() => {
-        const PORT = process.env.PORT || 80;
+        const PORT = process.env.PORT || 3000;
         app.listen(3000, () => console.log(`Server running at: http://localhost:${PORT}`));
     })
     .catch((err) => {
