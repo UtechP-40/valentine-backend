@@ -14,8 +14,16 @@ dotenv.config({ path: "./.env" });
 const app = express();
 
 app.use(
-    cors("*")
+    cors({
+      origin: "https://valentine-rust-five.vercel.app", // Your frontend URL
+      methods: "GET,POST,PUT,DELETE,OPTIONS",
+      allowedHeaders: "Content-Type,Authorization",
+      credentials: true, // If using cookies/sessions
+    })
   );
+  
+  // ✅ Handle Preflight Requests (for POST, PUT, DELETE)
+  app.options("*", cors());
 
 
 app.use(express.json());
