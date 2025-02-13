@@ -94,7 +94,7 @@ app.post("/save-love-letter/:id",saveLoveLetter )
 connectDb()
     .then(() => {
         const PORT = process.env.PORT || 80;
-        app.listen(PORT, () => console.log(`Server running at: http://localhost:${PORT}`));
+        app.listen(3000, () => console.log(`Server running at: http://localhost:${PORT}`));
     })
     .catch((err) => {
         console.error("MongoDB Connection Failed", err);
