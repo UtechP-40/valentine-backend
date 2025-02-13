@@ -7,13 +7,14 @@ import Love from "./models/love.models.js";
 import connectDb from "./lib/db.config.js";
 import cors from "cors";
 import dotenv from "dotenv";
-
+// import { saveLoveLetter } from "./models/loveLetter.models.js";
+import { saveLoveLetter } from './controllers/letter.controller.js';
 dotenv.config({ path: "./.env" });
 
 const app = express();
 
 app.use(cors({
-    origin: ["https://valentine-rust-five.vercel.app", "http://localhost"], // Allow frontend
+    origin: ["https://valentine-rust-five.vercel.app", "http://localhost:5173"], // Allow frontend
     methods: ["GET", "POST"], // Allowed methods
     allowedHeaders: ["Content-Type"], // Allowed headers
 }));
@@ -64,21 +65,32 @@ app.post("/save-valentine", upload.fields([{ name: "image", maxCount: 1 }]), asy
 app.get("/get-love/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const love = await Love.findOne({ _id: id });
+
+        // Find the love message and populate the loveLetters field
+        const love = await Love.findOne({ _id: id }).populate("loveLetters");
+
         if (!love) {
             throw new ApiError(404, "Love message not found");
         }
+
         console.log("Love message found", love);
         return res.status(200).json(new ApiResponse(200, love, "Love message found"));
     } catch (error) {
-        res.status(error.statusCode || 500).json(new ApiResponse(error.statusCode || 500, null, error.message || "Internal Server Error"));
+        console.error("Error fetching love message:", error);
+        res.status(error.statusCode || 500).json(
+            new ApiResponse(error.statusCode || 500, null, error.message || "Internal Server Error")
+        );
     }
 });
+
+
+app.post("/save-love-letter/:id",saveLoveLetter )
+
 
 connectDb()
     .then(() => {
         const PORT = process.env.PORT || 80;
-        app.listen(3000, () => console.log(`Server running at: http://localhost:${PORT}`));
+        app.listen(PORT, () => console.log(`Server running at: http://localhost:${PORT}`));
     })
     .catch((err) => {
         console.error("MongoDB Connection Failed", err);

@@ -20,7 +20,13 @@ const loveSchema = new mongoose.Schema({
     firstMet: {
         type: Date,
         required: true
-    }
+    },
+    loveLetters:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'LoveLetter'
+        }
+    ]
 }, { timestamps: true });
 
 const Love = mongoose.model('Love', loveSchema);
