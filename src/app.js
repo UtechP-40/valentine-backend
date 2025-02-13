@@ -16,7 +16,6 @@ app.use(cors({
     origin: ["https://valentine-rust-five.vercel.app", "http://localhost"], // Allow frontend
     methods: ["GET", "POST"], // Allowed methods
     allowedHeaders: ["Content-Type"], // Allowed headers
-    credentials: true, // Allow cookies if needed
 }));
 
 
