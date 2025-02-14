@@ -15,7 +15,7 @@ const app = express();
 
 app.use(
     cors({
-      origin: "https://valentine-rust-five.vercel.app", // Your frontend URL
+      origin: "*",//["https://valentine-rust-five.vercel.app","*"], // Your frontend URL
       methods: "GET,POST,PUT,DELETE,OPTIONS",
       allowedHeaders: "Content-Type,Authorization",
       credentials: true, // If using cookies/sessions
